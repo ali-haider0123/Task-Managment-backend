@@ -160,7 +160,7 @@ const Signup = () => {
 
       <Container fluid className="min-vh-100 bg-light d-flex justify-content-center align-items-center py-5">
         <Card
-          className="shadow-lg border-0 overflow-hidden"
+          className="shadow-lg border shadow-lg mb-5 bg-white rounded overflow-hidden"
           style={{ width: "100%", maxWidth: "950px" }}
         >
 
