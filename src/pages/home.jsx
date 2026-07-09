@@ -7,6 +7,7 @@ import { RiSettings5Fill } from "react-icons/ri";
 import { FaLightbulb } from "react-icons/fa";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { PiListChecksFill } from "react-icons/pi";
+import { IoChatbox } from "react-icons/io5";
 
 export default function HomePage() {
   return (
@@ -331,35 +332,35 @@ export default function HomePage() {
             </Card>
           </Col>
           <Col xs={12} md={6} lg={3}>
-            <Card className="border-1 shadow-sm p-4 rounded-4">
+            <Card className="h-100 border-primary border-1 shadow-sm p-4 rounded-4">
               <Card.Body className="p-0 d-flex flex-column justify-content-between">
                 <div>
                   <div
                     className="d-flex align-items-center justify-content-center fs-2 fw-bold bg-light border rounded-3 mb-4"
                     style={{ width: '60px', height: '60px' }}
                   >
-                    <PiListChecksFill className=''/> 
+                    <PiListChecksFill className='fs-2 text-primary' />
 
                   </div>
                   <Card.Title className="fw-semibold text-dark fs-4 mb-3">
-                    Customizable Workflow
+                    Task Managment
                   </Card.Title>
                   <Card.Text className="text-muted fs-6 lh-base mb-4">
-                    Manage everything from tasks to team communication in on intuitive platform designed to boost productivity
+                    Easily manage tasks, deadlines, and priorities to keep projects running smoothly
                   </Card.Text>
                 </div>
               </Card.Body>
             </Card>
           </Col>
           <Col xs={12} md={6} lg={3}>
-            <Card className=" border-1 shadow-sm p-4 rounded-4">
+            <Card className="h-100 border-warning border-1 shadow-sm p-4 rounded-4">
               <Card.Body className="p-0 d-flex flex-column justify-content-between">
                 <div>
                   <div
                     className="d-flex align-items-center justify-content-center fs-2 fw-bold bg-light border rounded-3 mb-4"
                     style={{ width: '60px', height: '60px' }}
                   >
-                    03
+                    <IoChatbox className='fs-2 text-warning' />
 
                   </div>
                   <Card.Title className="fw-semibold text-dark fs-4 mb-3">

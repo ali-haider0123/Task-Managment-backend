@@ -17,11 +17,11 @@ export default function UserProvider({ children }) {
     }
 
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     const user = localStorage.getItem("user")
-    //     setUser(JSON.parse(user))
-    // }, [])
+        const user = localStorage.getItem("user")
+        setUser(JSON.parse(user))
+    }, [])
 
 
     return (
