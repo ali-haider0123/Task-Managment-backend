@@ -24,6 +24,10 @@ app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/task", taskRouter);
 
 
+app.get("/", (res, req) => {
+    return res.send(":Hello")
+})
+
 app.listen(port, async () => {
     await mongoose.connect;
 })
