@@ -25,7 +25,7 @@ app.use("/api/v1/task", taskRouter);
 
 
 app.get("/", (res, req) => {
-    return res.send(":Hello")
+    return res.send("  Hello")
 })
 
 app.listen(port, async () => {
