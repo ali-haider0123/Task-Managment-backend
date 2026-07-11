@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
 app.use("/uploads", express.static("./uploads"))
-const port = process.env.APP_PORT;
+const port = process.env.PORT || 8080;
 
 app.use("/api/v1/user", router);
 app.use("/api/v1/category", categoryRouter);
@@ -30,6 +30,7 @@ app.get("/", (res, req) => {
 
 app.listen(port, async () => {
     await mongoose.connect;
+    console.log("server is running")
 })
 
 // console.log("Done")
