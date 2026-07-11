@@ -10,6 +10,7 @@ const app = new express();
 const auth = require("./middleware/user.middleware")
 // const hosting = require("./config/hosting")
 const cors = require("cors");
+const { json } = require("stream/consumers");
 require("dotenv").config();
 
 app.use(express.urlencoded({ extended: false }))
@@ -30,6 +31,20 @@ app.get("/", (req, res) => {
 
 
 
+app.use((err, req, res, next) => {
+    return res.send(err);
+})
+
+app.use((req, res, next) => {
+    return res.status(404).json(
+        {
+            message: "Request Not Found",
+        }
+    )
+})
+
+
+
 async function connect() {
     try {
         await mongoose.connect;
@@ -37,6 +52,7 @@ async function connect() {
     } catch (e) {
         console.log("Db is not Connect")
     }
+
 
 }
 app.listen(port, async () => {
