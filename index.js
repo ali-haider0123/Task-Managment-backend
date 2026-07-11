@@ -24,7 +24,7 @@ app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/task", taskRouter);
 
 
-app.get("/", (res, req) => {
+app.get("/", (req, res) => {
     return res.send("  Hello")
 })
 
