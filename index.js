@@ -28,14 +28,25 @@ app.get("/", (req, res) => {
     return res.send("  Hello")
 })
 
+
+
+async function connect() {
+    try {
+        await mongoose.connect;
+        console.log("DB is Conneted")
+    } catch (e) {
+        console.log("Db is not Connect")
+    }
+
+}
 app.listen(port, async () => {
-   try{
-     await mongoose.connect;
-    console.log("server is running")
-   }
-   catch(err){
-    console.log("app not running or db failed")
-   }
+    try {
+
+        console.log("server is running")
+    }
+    catch (err) {
+        console.log("app not running or db failed")
+    }
 })
 
 // console.log("Done")
