@@ -23,4 +23,7 @@ app.use("/api/v1/user", router);
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/task", taskRouter);
 
-app.listen(port, hosting);
+
+app.listen(port, async () => {
+    await mongoose.connect;
+})
