@@ -40,66 +40,20 @@ class TaskController {
 
     async Create(req, res) {
         try {
-            const {
-                Title, Description, UserId, CategoryId, Progress, Status
-            } = req.body;
-
-            if (!Title || !Description || !Progress || !Status || !UserId || !CategoryId) {
-                return res.status(400).json({
-                    message: "Bad Request! Please fill all field."
-                })
-            }
-
-            const existingTask = await Task.findOne({ Title });
-
-            if (existingTask) {
-                return res.status(400).json({
-                    message: "Bad Request! Task is already existed"
-                })
-            }
-
-            const newTask = new Task({
-                Title,
-                Description,
-                UserId,
-                CategoryId,
-                Progress,
-                Status
-            })
-            await newTask.save();
-
-            return res.status(201).json({
-                message: "Task Successfully Added!"
-            })
-
-
-        } catch (e) {
-            console.log(e)
-            return res.status(500).json({
-                message: "Internal Server Error"
-            })
-        }
-    }
-
-    async Add(req, res) {
-        try {
             console.log(req?.body);
-            let userId = req.currentUser._id;
 
-            // throw new Error("custom");
+            const userId = req.currentUser?._id || req.currentUser?.id;
 
             const { title, description, progress, dueDate } = req?.body;
 
-            console.log(dueDate)
-
             if (!title || !userId) {
-                return res.status(400).json({
-                    message: "Title and User Id is required"
-                })
+                return res.status(401).json({
+                    message: "Unauthorized. Please login again."
+                });
             }
 
 
-            const newTask = new TaskModel({
+            const newTask = new Task({
                 title,
                 description,
                 isActive: true,
@@ -123,11 +77,17 @@ class TaskController {
         }
     }
 
+
     async Update(req, res) {
         try {
-            const taskId = req.body.id;
-
-            const updated = await Task.findByIdAndUpdate({ _id: taskId });
+            const { id } = req.params;
+            const { Title } = req.body;
+            console.log(id, Title)
+            const updated = await Task.findByIdAndUpdate(
+                id,
+                { Title: Title },
+                { new: true }
+            );
 
             if (!updated) {
                 return res.status(400).json({
@@ -148,9 +108,9 @@ class TaskController {
 
     async Delete(req, res) {
         try {
-            const taskId = req.params.id;
+            const id = req.params.id;
 
-            const deleted = await Task.findOneAndDelete({ _id: taskId });
+            const deleted = await Task.findByIdAndDelete(id);
 
             if (deleted) {
                 return res.status(200).json(deleted);

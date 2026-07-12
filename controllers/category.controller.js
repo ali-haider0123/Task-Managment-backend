@@ -35,23 +35,26 @@ class CategoriesController {
 
     async Create(req, res) {
         try {
-            console.log("Incoming data:", req.body);
-            const { Name, Rank, Color, Description } = req.body;
-            if (!Name) {
-                return res.status(400).json({ message: "Invalid json data: Name is required" });
-            }
-
-            if (Name.length < 3 || Name.length > 50) {
-                return res.status(400).json({ message: "Invalid json data: Name must have 3 to 50 characters" });
-            }
-
+            console.log(req.body);
+            const { Name, Rank, Color, Image, Description } = req.body;
+            //you can apply all required server side validation here
+            let msg;
+            if (!Name) msg = "Name is required";
+            if (Name.length < 3 || Name.length > 50)
+                msg += "Name must have 3 to 50 characters";
+            if (msg)
+                return res
+                    .status(400)
+                    .json(new Message(`Invalid json data: ${msg}`, 404));
             const created = await Categories.create(req.body);
-
+            // console.log(req.url);
+            // console.log(req.baseUrl);
+            // console.log(req.originalUrl);
             res.header("location", `${req.originalUrl}/${created._id}`);
             return res.status(201).json(created);
-
+            //return res.status(200).json(new Message("Done", 200));
         } catch (e) {
-            console.error("Backend Error Details:", e);
+            console.log(e);
             return res.status(500).json({ message: "Internal Server Error" });
         }
     }
@@ -82,7 +85,7 @@ class CategoriesController {
             let id = req.params.id;
             console.log(req.body);
             const { Name, Rank, Color, Image, Description } = req.body;
-            
+            //you can apply all required server side validation here
             let msg;
             if (!Name) msg = "Name is required";
             if (Name.length < 3 || Name.length > 50)
@@ -92,7 +95,7 @@ class CategoriesController {
                     .status(400)
                     .json(new Message(`Invalid json data: ${msg}`, 404));
 
-            const category = await Category.findOneAndUpdate(
+            const category = await Categories.findOneAndUpdate(
                 { _id: id },
                 {
                     Name,

@@ -1,23 +1,35 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const User = require("../model/user.model")
 
-function authenticate(req, res, next) {
+async function authenticate(req, res, next) {
     try {
-        const token = req?.headers?.authorization;
-        console.log(token)
-        if (!token) return res.status(401).json(new Message("you are not authenticated, login first", 401));
-        const tokenData = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        req.currentUser = tokenData;
-        // console.log("Token Data:");
-        // console.log(tokenData);
+        const authHeader = req.headers.authorization;
+        let token = null;
+
+        if (authHeader) {
+            if (authHeader.startsWith("Bearer ")) {
+                token = authHeader.split(" ")[1];
+            } else {
+                token = authHeader;
+            }
+        }
+
+        if (!token) {
+            return res.status(401).json({ message: "Access denied. No token provided." });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY || process.env.JWT_SECRET);
+
+        req.currentUser = decoded;
+
+        if (!req.currentUser._id && decoded.id) {
+            req.currentUser._id = decoded.id;
+        }
+
         next();
-    }
-    catch (e) {
-        if (e.name === "JsonWebTokenError") return res.status(500).json(
-            { message: "invalid jsonwebtoken" }
-        );
-        console.log(e);
-        return res.status(500).json(new Message(e.message, 500));
+    } catch (err) {
+        console.error("Authentication Middleware Error:", err.message);
+        return res.status(401).json({ message: "Invalid or expired token." });
     }
 }
 
